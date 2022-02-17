@@ -22,7 +22,9 @@ export default `
   type Query{
     ${BookQueries}
   }
-
   type Mutation{
     ${BookMutations}
+  }
+  type Subscription{
+    bookAdded: Book
   }`;

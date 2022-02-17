@@ -1,11 +1,13 @@
 import gql from "graphql-tag";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { subscriptions } from "./pubsub.js";
 
 //Object Schema Imports
 import BookTypes from "../books/graphql/types.js";
 import BookQueries from "../books/graphql/queries.js";
 import BookMutations from "../books/graphql/mutations.js";
 import BookResolvers from "../books/graphql/resolvers.js";
+import BookSubscriptions from "../books/graphql/subscriptions.js";
 
 import AuthorTypes from "../author/graphql/types.js";
 import AuthorQueries from "../author/graphql/queries.js";
@@ -26,7 +28,8 @@ const schema = {
     type Response {
       success: Boolean
       message: String
-    }`,
+    }
+  `,
 
   resolvers: {
     Query: {
@@ -42,7 +45,12 @@ const schema = {
     ...BookResolvers,
     ...AuthorResolvers,
     ...LibraryResolvers,
+    Subscription: {
+      ...BookSubscriptions,
+    },
   },
+
+  subscriptions: subscriptions,
 };
 
 export default makeExecutableSchema(schema);

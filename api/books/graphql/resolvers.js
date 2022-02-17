@@ -7,7 +7,7 @@ export default {
       return getAuthorByID(book.author);
     },
     library: (book) => {
-      return book.library.map((x) => getLibraryByID(x))
+      return book.library.map((x) => getLibraryByID(x));
     },
   },
 };

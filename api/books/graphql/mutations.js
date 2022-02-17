@@ -1,12 +1,12 @@
-import {
-  addBook,
-  updateBook,
-  deleteBook,
-} from "../../../datasets/books.js";
+import { addBook, updateBook, deleteBook } from "../../../datasets/books.js";
+import { pubsub } from "../../graphql/pubsub.js";
 
 export default {
-  addBook: async (_, { id, title, author, library}) => {
+  addBook: async (_, { id, title, author, library }) => {
     if (addBook(id, title, author, library)) {
+      pubsub.publish("BOOK_ADDED", {
+        bookAdded: { id: id, title: title, author: author, library: library },
+      });
       return { success: true, message: "Book added" };
     } else {
       return { success: false, message: "Failed to add book" };
